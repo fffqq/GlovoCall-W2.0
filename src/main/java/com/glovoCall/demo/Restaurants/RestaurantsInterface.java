@@ -1,6 +1,5 @@
-package com.glovoCall.demo;
+package com.glovoCall.demo.Restaurants;
 
-import com.glovoCall.demo.Restaurants.Restaurant;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

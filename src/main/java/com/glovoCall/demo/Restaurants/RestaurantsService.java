@@ -1,9 +1,7 @@
 package com.glovoCall.demo.Restaurants;
 
-import com.glovoCall.demo.RestaurantsInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -24,8 +22,6 @@ public class RestaurantsService {
                 .toList();
     }
     public void CreateRestaurant(Restaurant restaurant){
-
-
         if (RestaurantRepo.existsByNameAndAddress(restaurant.getName(), restaurant.getAddress())) {
             throw new IllegalArgumentException("restaurant  already exist. IDI NAHUI");
         }
