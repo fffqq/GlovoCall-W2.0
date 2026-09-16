@@ -24,6 +24,13 @@ public class RestaurantsService {
                 .toList();
     }
     public void CreateRestaurant(Restaurant restaurant){
+        if(restaurant == null){
+            throw new IllegalArgumentException("restaurant is null. IDI NAHUI SUKA");
+        }
+
+        if (RestaurantRepo.existsByNameAndAddress(restaurant.getName(), restaurant.getAddress())) {
+            throw new IllegalArgumentException("restaurant  already exist. IDI NAHUI");
+        }
         RestaurantRepo.save(restaurant);
     }
 
