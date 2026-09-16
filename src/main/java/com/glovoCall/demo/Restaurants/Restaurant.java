@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.UUID;
+import jakarta.validation.constraints.NotBlank;
 
 @Getter
 @Setter
@@ -14,8 +15,10 @@ public class Restaurant {
     @GeneratedValue(
             strategy =GenerationType.UUID)
     private UUID id;
+    @NotBlank
     @Column(nullable = false)
     private String name;
+    @NotBlank
     private String address;
     @Column(unique = true)
     private String imagePath;
