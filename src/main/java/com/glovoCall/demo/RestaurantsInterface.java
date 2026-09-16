@@ -3,6 +3,9 @@ package com.glovoCall.demo;
 import com.glovoCall.demo.Restaurants.Restaurant;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RestaurantsInterface extends JpaRepository<Restaurant,Long>{
+import java.util.UUID;
 
+public interface RestaurantsInterface extends JpaRepository<Restaurant, UUID>{
+    // кароч у тебе тут був Restaurant, Long но в ростораны id це UUID поміняв кароч
+    boolean existsByNameAndAddress(String name, String address);
 }

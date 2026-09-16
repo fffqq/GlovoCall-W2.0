@@ -2,6 +2,7 @@ package com.glovoCall.demo.Restaurants;
 
 
 import com.glovoCall.demo.RestaurantsInterface;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,10 @@ public class RestaurantsController {
         return restaurantsService.ImageAndNameOfAllRest();
     }
     @PostMapping("/postRest")
-    public void PostRest(@RequestBody Restaurant restaurant){
+    public void PostRest(
+            @RequestBody
+            @Valid
+            Restaurant restaurant){
         restaurantsService.CreateRestaurant(restaurant);
     }
 }
