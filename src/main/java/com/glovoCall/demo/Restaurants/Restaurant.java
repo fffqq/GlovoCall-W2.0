@@ -1,5 +1,6 @@
 package com.glovoCall.demo.Restaurants;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ public class Restaurant {
     @Id
     @GeneratedValue(
             strategy =GenerationType.UUID)
+    @Setter(AccessLevel.NONE)
     private UUID id;
     @NotBlank
     @Column(nullable = false)

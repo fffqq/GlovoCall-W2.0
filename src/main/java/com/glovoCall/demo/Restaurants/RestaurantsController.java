@@ -17,14 +17,14 @@ public class RestaurantsController {
     private final RestaurantsService restaurantsService;
 
     @GetMapping("/listOfRest")
-    public List<RestaurantDTO> AllRestaurants(){
+    public List<restaurantDTOResponse> AllRestaurants(){
         return restaurantsService.ImageAndNameOfAllRest();
     }
     @PostMapping("/postRest")
     public void PostRest(
-            @RequestBody
             @Valid
-            Restaurant restaurant){
+            @RequestBody
+            restaurantDTORequest restaurant){
         restaurantsService.CreateRestaurant(restaurant);
     }
 }
