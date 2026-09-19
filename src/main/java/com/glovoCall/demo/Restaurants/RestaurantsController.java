@@ -1,9 +1,8 @@
 package com.glovoCall.demo.Restaurants;
 
 
-import com.glovoCall.demo.RestaurantsInterface;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,11 +17,14 @@ public class RestaurantsController {
     private final RestaurantsService restaurantsService;
 
     @GetMapping("/listOfRest")
-    public List<RestaurantDTO> AllRestaurants(){
+    public List<restaurantDTOResponse> AllRestaurants(){
         return restaurantsService.ImageAndNameOfAllRest();
     }
     @PostMapping("/postRest")
-    public void PostRest(@RequestBody Restaurant restaurant){
+    public void PostRest(
+            @Valid
+            @RequestBody
+            restaurantDTORequest restaurant){
         restaurantsService.CreateRestaurant(restaurant);
     }
 }
