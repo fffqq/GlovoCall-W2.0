@@ -11,6 +11,8 @@ export default function Carousel() {
     const[restaurant,setRestaurant]=useState<Restaurant[]>([]);
     const [error, setError] = useState();
     const scrolRef=useRef<HTMLUListElement>(null);
+    const [searchText, setSearchText] = useState("");
+
     useEffect(()=> {
         fetch('http://localhost:8080/api/v1/GlovoCall/listOfRest')
             .then(res => {
@@ -33,16 +35,23 @@ export default function Carousel() {
             scrolRef.current.scrollTo({left:scrollTo ,behavior:'smooth'});
         }
     }
+    const filteredRestaurants = restaurant.filter(r=>r.name.toLowerCase().
+    includes(searchText.toLowerCase()));
     if (error) return (
         <div className="flex w-full min-h-1/3 bg-amber-100 justify-center items-center">
             <span className="text-xl h-20">Error:The restaurants did not load </span>
         </div>);
     return (
-        <div className="flex justify-center items-center w-full min-h-[50vh] bg-amber-300 py-8 px-4">
+        <div className="flex justify-center items-center w-full min-h-[50vh]  py-8 px-4">
 
 
-            <div className="w-full bg-amber-300 ">
-                <div className="flex justify-end gap-2 mb-3">
+            <div className="w-full ">
+                <div className="flex justify-between gap-2 mb-3">
+                    <input placeholder="Searching for something specific?"
+                           className="bg-white rounded-2xl m-2  w-1/3  px-4 py-2 mr-auto "
+                           onChange={(e) => setSearchText(e.target.value)
+                           }
+                    />
                     <button
                         onClick={() => scroll('left')}
                         className="px-4 py-1 bg-white hover:bg-gray-50 rounded shadow font-medium"
@@ -65,7 +74,7 @@ export default function Carousel() {
                 </style>
 
 
-                {restaurant.map(restaurant => (
+                {filteredRestaurants.map(restaurant => (
                     <li className="flex flex-col items-center w-200px shrink-0  w-1/4
                     bg-white rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1
                     transition-all duration-300 snap-start p-4 cursor-pointer"

@@ -22,7 +22,7 @@ public class Restaurant {
     private String name;
     @NotBlank
     private String address;
-    @Column(unique = true)
+
     private String imagePath;
 
 

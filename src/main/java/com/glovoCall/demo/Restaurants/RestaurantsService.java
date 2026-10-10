@@ -17,15 +17,8 @@ public class RestaurantsService {
     private final RestaurantsInterface RestaurantRepo;
 
     public List<restaurantDTOResponse> ImageAndNameOfAllRest(){
-        List<Restaurant> allRestaurants=RestaurantRepo.findAll();
 
-        return allRestaurants.stream().map(restaurant -> new restaurantDTOResponse(
-                        restaurant.getId(),
-                        restaurant.getName(),
-                        restaurant.getImagePath()
-                        )
-                )
-                .toList();
+        return RestaurantRepo.findAllUnique();
     }
     public restaurantDTOResponse CreateRestaurant(restaurantDTORequest request){
         log.info("Try to save a Restaurant: name={},adress={}"
