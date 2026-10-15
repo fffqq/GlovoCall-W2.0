@@ -5,8 +5,10 @@ import Carousel from "./Carousel.tsx";
 function App() {
     return (
 
+
         <div className="flex flex-col justify-between items-center font-mono bg-glovo-yellow min-h-screen">
-            <Header></Header>
+            <Header>
+            </Header>
             <Carousel></Carousel>
             <Footer></Footer>
         </div>
