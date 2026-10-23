@@ -5,6 +5,7 @@ import * as React from "react";
 
 type LoginElementProps = {
     isOpen: boolean;
+    mode: 'signUp' | 'signIn';
     onClose: () => void;
 };
 
@@ -13,7 +14,7 @@ type Data={
     email: string,
     password: string,
 }
-export default function SignInSignOut({isOpen, onClose}:LoginElementProps) {
+export default function SignInSignOut({isOpen, onClose,mode}:LoginElementProps) {
     const INITIAL_DATA = {
         name: "",
         email: "",
@@ -23,29 +24,32 @@ export default function SignInSignOut({isOpen, onClose}:LoginElementProps) {
 
     const [error, setError] = useState("");
 
+    const isSignUp = mode === 'signUp';
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         setError("")
         setData(prev => ({...prev, [name]: value}));
     };
     const handleSubmit = async () => {
-        if (!data.email.trim() || !data.password.trim() || !data.name.trim()) {
+        if ((!data.email.trim() || !data.password.trim() || !data.name.trim())&&isSignUp) {
             setError("Please enter a valid data");
             setData(INITIAL_DATA);
             return;
         }
+        const url=isSignUp? "http://localhost:8080/PostRest":
+            "http://localhost:8080/auth";
+        const bodyData=isSignUp
+            ? {email:data.email, password:data.password,username:data.name}
+            : {email:data.email, password:data.password};
         try {
-            const response = await fetch("http://localhost:8080/PostRest", {
+            const response = await fetch(url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 credentials: "include",
-                body: JSON.stringify ({
-                    email: data.email,
-                    password: data.password,
-                    username: data.name,
-                })
+                body: JSON.stringify (bodyData)
             });
             if (response.ok) {
                 onClose();
@@ -65,14 +69,15 @@ export default function SignInSignOut({isOpen, onClose}:LoginElementProps) {
                 className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md bg-white rounded-2xl shadow-2xl p-8 flex flex-col gap-5 z-50">
 
                 <h2 className="text-2xl font-bold text-gray-800 text-center mb-2">
-                    Enter details
+                    {isSignUp ? "Create Account" : "Welcome Back"}
                 </h2>
 
                 {error && <div className="bg-white text-center text-red-600">{error}</div>}
 
 
                 <div className="flex flex-col gap-4">
-                    <input
+                    {isSignUp &&(
+                        <input
                         name="name"
                         placeholder="Username"
                         type="text"
@@ -81,6 +86,7 @@ export default function SignInSignOut({isOpen, onClose}:LoginElementProps) {
                         value={data.name}
                         onChange={handleChange}
                     />
+                    )}
                     <input
                         name="email"
                         placeholder="Email"
