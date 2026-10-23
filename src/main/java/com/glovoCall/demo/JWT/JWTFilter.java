@@ -24,12 +24,10 @@ import java.util.stream.Stream;
 public class JWTFilter extends OncePerRequestFilter {
     private final JWTService jwtService;
     private final CustomUserService customUserService;
-    private final ServletRequest httpServletRequest;
 
     public JWTFilter(JWTService jwtService, CustomUserService customUserService, ServletRequest httpServletRequest) {
         this.jwtService = jwtService;
         this.customUserService = customUserService;
-        this.httpServletRequest = httpServletRequest;
     }
 
     private String getTokenFromCookie(HttpServletRequest request){
