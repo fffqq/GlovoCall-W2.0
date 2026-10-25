@@ -7,6 +7,7 @@ type LoginElementProps = {
     isOpen: boolean;
     mode: 'signUp' | 'signIn';
     onClose: () => void;
+    onSuccess: () => void;
 };
 
 type Data={
@@ -14,7 +15,7 @@ type Data={
     email: string,
     password: string,
 }
-export default function SignInSignOut({isOpen, onClose,mode}:LoginElementProps) {
+export default function SignInSignOut({isOpen, onClose,mode,onSuccess}:LoginElementProps) {
     const INITIAL_DATA = {
         name: "",
         email: "",
@@ -53,7 +54,7 @@ export default function SignInSignOut({isOpen, onClose,mode}:LoginElementProps) 
             });
             if (response.ok) {
                 onClose();
-                // Здесь можно кинуть событие, чтобы обновить UI (например, показать аватарку)
+                onSuccess();
             } else {
                 setError("Wrong email or password");
                 setData(INITIAL_DATA);
