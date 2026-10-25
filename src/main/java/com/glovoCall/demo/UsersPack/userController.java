@@ -22,6 +22,10 @@ public class userController {
         cookie.setMaxAge(maxAge);
         response.addCookie(cookie);
     }
+
+
+
+
     @PostMapping("/PostRest")
     public void createUser(@RequestBody
                            @Valid
@@ -55,6 +59,16 @@ public class userController {
                 60*60*24);
         return ResponseEntity.ok(tokens);
     }
+
+    @GetMapping("/info-header")
+    public ResponseEntity <UsernameResponse> infoHeader(@CookieValue( name = "jwt") String token,
+    HttpServletResponse response){
+        UsernameResponse usernameResponse=userService.findName(token);
+
+        return ResponseEntity.ok(usernameResponse);
+    }
+
+
 
 
 }

@@ -4,6 +4,7 @@ import SignInSignOut from "./SignInSignOut.tsx";
 
 
 export default function Header() {
+
     const [modal, setModal] = useState(false);
     const [authMod, setAuthMod] = useState<'signUp' | 'signIn'>('signUp');
     const handleOpen = (mode: 'signUp' | 'signIn') => {

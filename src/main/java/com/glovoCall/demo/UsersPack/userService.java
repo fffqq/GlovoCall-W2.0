@@ -56,4 +56,12 @@ public class userService {
 
         return jwtService.refreshBaseToken(email,token);
     }
+    public UsernameResponse findName(String token){
+        String finder =jwtService.getEmailFromToken(token);
+        User user=UserRepository.findByEmail(finder).
+                orElseThrow(()->new RuntimeException("User not found"));
+
+
+        return new UsernameResponse(user.getUsername());
+    }
 }
