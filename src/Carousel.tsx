@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from "react";
-
+import MenuModal from "./MenuModal.tsx";
 
 export default function Carousel() {
      interface Restaurant{
@@ -12,9 +12,11 @@ export default function Carousel() {
     const [error, setError] = useState();
     const scrolRef=useRef<HTMLUListElement>(null);
     const [searchText, setSearchText] = useState("");
+    const [menu, setMenu] = useState(false);
+    const [nameOfRestaurant, setNameOfRestaurant] = useState("");
 
     useEffect(()=> {
-        fetch('http://localhost:8080/api/v1/GlovoCall/listOfRest')
+        fetch('https://localhost:7044/listOfRest')
             .then(res => {
                 if (!res.ok) {
                     throw new Error(`Server error: ${res.status}`);
@@ -78,7 +80,13 @@ export default function Carousel() {
                     <li className="flex flex-col items-center w-200px shrink-0  w-1/4
                     bg-white rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1
                     transition-all duration-300 snap-start p-4 cursor-pointer"
-                        key={restaurant.id}>
+                        key={restaurant.id}
+                        onClick={() => {
+                            setMenu(true);
+                            setNameOfRestaurant(restaurant.name);
+                        }}
+
+                    >
 
 
                         <div className="flex justify-center items-center  ">
@@ -94,6 +102,13 @@ export default function Carousel() {
                     </li>
                 ))}
             </ul>
+                {menu && (
+                    <MenuModal
+                        nameOfRestaurant={nameOfRestaurant}
+                        onClose={() => setMenu(false)}
+                    />
+                )}
+
             </div>
         </div>
     );
